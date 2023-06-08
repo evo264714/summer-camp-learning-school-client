@@ -53,11 +53,16 @@ const Navbar = () => {
                                 Logout
                             </button>
                             <img
-                                src=''
+                                src={user?.photoURL}
                                 alt="User Profile"
                                 className="h-8 w-8 rounded-full"
                             />
                         </>
+
+
+
+
+
                     ) : (
                         <>
                             <Link

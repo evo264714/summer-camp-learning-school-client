@@ -1,17 +1,23 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { signInWithPopup } from "firebase/auth";
 
 
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-    const { signIn } = useContext(AuthContext)
+    const { signIn, googleProvider, auth } = useContext(AuthContext)
+    
+    const [ setError] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const onSubmit = (data) => {
         console.log(data);
@@ -28,6 +34,21 @@ const Login = () => {
               })
         })
     };
+
+    const handleGoogleSignIn = () =>{
+        setError('');
+        signInWithPopup(auth, googleProvider)
+        .then(result =>{
+            
+            const user = result.user;
+            console.log(user);
+            navigate(from, {replace: true})
+
+        })
+        .catch(error =>{
+            console.log(error.message);
+        })
+    }
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
@@ -70,7 +91,7 @@ const Login = () => {
                 </form>
                 <p className="py-2">New to Melody Muse? Please <Link to='/registration'><span className="underline">Register</span></Link> Here</p>
                 <div className="flex justify-center">
-                    <button className="btn btn-circle bg-yellow-200 py-4 text-red-500 text-center"><FaGoogle></FaGoogle></button>
+                    <button onClick={handleGoogleSignIn} className="btn btn-circle bg-yellow-200 py-4 text-red-500 text-center"><FaGoogle></FaGoogle></button>
                 </div>
             </div>
         </div>

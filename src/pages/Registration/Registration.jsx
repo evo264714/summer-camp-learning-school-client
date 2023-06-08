@@ -1,20 +1,36 @@
 
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Registration = () => {
-    const { register, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm();
-    const {createUser} = useContext(AuthContext)
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting }, watch } = useForm();
+    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         console.log(data);
         createUser(data.email, data.password)
-        .then(result =>{
-            const loggedUser = result.user;
-            console.log(loggedUser);
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                updateUserProfile(data.name, data.photoUrl)
+                .then(() =>{
+                    console.log('user info updated');
+                    reset();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'User has been registered successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                      navigate('/')
+                })
+                .catch(error => console.log(error))
+            })
     };
     return (
         <div className="min-h-screen text-white flex justify-center items-center my-20">
@@ -77,9 +93,9 @@ const Registration = () => {
                             type="text"
                             id="photoUrl"
                             {...register('photoURL')}
-                            className={`w-full text-black p-2 border rounded outline-none ${errors.photoUrl ? 'border-red-500' : 'border-gray-300'}`}
+                            className='w-full text-black p-2 border rounded outline-none'
                         />
-                        
+
                     </div>
                     <button type="submit" disabled={isSubmitting} className="w-full bg-black text-white py-2 rounded font-semibold hover:bg-yellow-200 transition duration-300">
                         {isSubmitting ? 'Submitting...' : 'Register'}
