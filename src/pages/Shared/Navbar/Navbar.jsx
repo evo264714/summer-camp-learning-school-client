@@ -26,7 +26,7 @@ const Navbar = () => {
                         Home
                     </Link>
                     <Link
-                        to="/instructors"
+                        to="/instructor"
                         className="text-white mx-4 hover:text-gray-300 transition duration-300"
                     >
                         Instructors
