@@ -1,37 +1,67 @@
 
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { signInWithPopup } from "firebase/auth";
+import { FaGoogle } from "react-icons/fa";
 
 const Registration = () => {
     const { register, handleSubmit, reset, formState: { errors, isSubmitting }, watch } = useForm();
-    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const { createUser, updateUserProfile, auth, googleProvider } = useContext(AuthContext)
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const onSubmit = (data) => {
-        console.log(data);
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoUrl)
-                .then(() =>{
-                    console.log('user info updated');
-                    reset();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'User has been registered successfully',
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                      navigate('/')
-                })
-                .catch(error => console.log(error))
+                    .then(() => {
+                        const saveUser = {name: data.name, email: data.email}
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User has been registered successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+                                }
+                            })
+
+                    })
+                    .catch(error => console.log(error))
             })
     };
+
+    const handleGoogleSignIn = () =>{
+        signInWithPopup(auth, googleProvider)
+        .then(result =>{
+            
+            const user = result.user;
+            console.log(user);
+            navigate(from, {replace: true})
+
+        })
+        .catch(error =>{
+            console.log(error.message);
+        })
+    }
     return (
         <div className="min-h-screen text-white flex justify-center items-center my-20">
             <div className="bg-base-content p-8 rounded-lg w-[500px]">
@@ -102,6 +132,9 @@ const Registration = () => {
                     </button>
                 </form>
                 <p className="py-2">Already have an account? Please <Link to='/login'><span className="underline">Login</span></Link> Here</p>
+                <div className="flex justify-center">
+                    <button onClick={handleGoogleSignIn} className="btn btn-circle bg-yellow-200 py-4 text-red-500 text-center"><FaGoogle></FaGoogle></button>
+                </div>
             </div>
         </div>
     );

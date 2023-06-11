@@ -1,24 +1,21 @@
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaGoogle } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
-import { signInWithPopup } from "firebase/auth";
+import GoogleLogin from "../../components/GoogleLogin/GoogleLogin";
 
 
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-    const { signIn, googleProvider, auth } = useContext(AuthContext)
-    
-    const [ error, setError] = useState('');
+    const { signIn } = useContext(AuthContext)
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
-    console.log(error);
+
 
     const onSubmit = (data) => {
         console.log(data);
@@ -34,22 +31,10 @@ const Login = () => {
                 timer: 1500
               })
         })
+        navigate(from, {replace: true})
     };
 
-    const handleGoogleSignIn = () =>{
-        setError('');
-        signInWithPopup(auth, googleProvider)
-        .then(result =>{
-            
-            const user = result.user;
-            console.log(user);
-            navigate(from, {replace: true})
-
-        })
-        .catch(error =>{
-            console.log(error.message);
-        })
-    }
+    
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
@@ -91,9 +76,7 @@ const Login = () => {
                     <button type="submit" className="w-full bg-black text-white py-2 rounded font-semibold hover:bg-yellow-200 transition duration-300">Login</button>
                 </form>
                 <p className="py-2">New to Melody Muse? Please <Link to='/registration'><span className="underline">Register</span></Link> Here</p>
-                <div className="flex justify-center">
-                    <button onClick={handleGoogleSignIn} className="btn btn-circle bg-yellow-200 py-4 text-red-500 text-center"><FaGoogle></FaGoogle></button>
-                </div>
+                <GoogleLogin></GoogleLogin>
             </div>
         </div>
     );
