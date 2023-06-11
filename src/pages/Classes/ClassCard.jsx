@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const ClassCard = ({ singleClass }) => {
     const {name, instructorName, image, availableSeats, price} = singleClass;
-    console.log(singleClass);
-
-    const {user} = useContext(AuthContext)
+    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSelectClass = () => {
         if (!user) {
@@ -20,15 +20,13 @@ const ClassCard = ({ singleClass }) => {
               reverseButtons: true,
             }).then((result) => {
               if (result.isConfirmed) {
-                // Redirect to login page
-                window.location.href = "/login";
+                navigate("/login");
               }
             });
           }
       };
     return (
-        // className={`class-card ${classItem.availableSeats === 0 ? "bg-red-100" : ""}`}
-        // className="card w-96 shadow-xl my-8" 
+        
         <div className={`card w-96 shadow-xl my-8 ${singleClass.availableSeats === 0 ? "bg-red-600" : "bg-warning"}`}>
             <figure><img className="h-72 w-full" src={image} alt="Shoes" /></figure>
             <div className="card-body">

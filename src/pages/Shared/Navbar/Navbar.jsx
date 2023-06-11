@@ -41,7 +41,7 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <Link
-                                to="/dashboard"
+                                to="/dashboard/myclasses"
                                 className="text-white mx-4 hover:text-gray-300 transition duration-300"
                             >
                                 Dashboard
