@@ -14,10 +14,11 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signIn, googleProvider, auth } = useContext(AuthContext)
     
-    const [ setError] = useState('');
+    const [ error, setError] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+    console.log(error);
 
     const onSubmit = (data) => {
         console.log(data);
