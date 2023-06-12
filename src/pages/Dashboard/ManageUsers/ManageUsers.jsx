@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAxios from "../../../hooks/useAxios";
 
 const ManageUsers = () => {
+    const [axiosSecure] = useAxios();
     const { data: users = [], refetch } = useQuery(['users'], async () => {
-        const res = await fetch('http://localhost:5000/users')
-        return res.json()
+        const res = await axiosSecure.get('/users')
+        return res.data;
     })
 
     const handleAdmin = user =>{
@@ -19,6 +21,25 @@ const ManageUsers = () => {
                     position: 'top-end',
                     icon: 'success',
                     title: `${user.name} is now an Admin`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+        })
+    }
+
+    const handleInstructor = user =>{
+        fetch(`http://localhost:5000/users/instructor/${user._id}`,{
+            method: 'PATCH'
+        })
+        .then(res => res.json())
+        .then(data =>{
+            if(data.modifiedCount){
+                refetch()
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: `${user.name} is now an Instructor`,
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -54,7 +75,9 @@ const ManageUsers = () => {
                                     }
                                 </td>
                                 <td>
-                                    <button className="btn btn-warning btn-xs px-4">Make Instructor</button>
+                                   {
+                                    user.role ==='instructor' ? 'instructor' :  <button onClick={() =>handleInstructor(user)} className="btn btn-warning btn-xs px-4">Make Instructor</button>
+                                   }
                                 </td>
                             </tr>)
                         }

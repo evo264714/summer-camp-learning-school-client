@@ -1,10 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
-import { FaSchool, FaStamp, FaUsers } from "react-icons/fa";
+import { FaSchool, FaStamp, FaUsers, FaPlus } from "react-icons/fa";
 import { AiFillBank } from "react-icons/ai";
+import useAdmin from "../hooks/useAdmin";
+import useInstructor from "../hooks/useInstructor";
 
 const Dashboard = () => {
-
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
 
   return (
     <div className="drawer">
@@ -21,46 +23,76 @@ const Dashboard = () => {
           </Link>
           <div className="flex-none hidden lg:block">
             <ul className="flex justify-around p-4 w-80">
-              {/* <li><NavLink to="/dashboard/adminhome"><FaHome></FaHome> Admin Home</NavLink></li>
-                  <li><NavLink to="/dashboard/addItem"> <FaUtensils></FaUtensils> Add an Item</NavLink></li>
-                  <li><NavLink to="/dashboard/manageitems"><FaWallet></FaWallet> Manage Items</NavLink></li>
-                  <li><NavLink to="/"><FaBook></FaBook> Manage Bookings(not implemented)</NavLink></li>
-                  <li><NavLink to="/dashboard/allusers"><FaUsers></FaUsers> All Users</NavLink></li> */}
-
-              {
-                isAdmin ?
-                  <>
-                    <>
-                    <li><Link to="/dashboard/manageclasses"><AiFillBank></AiFillBank> Manage Classes</Link></li>
-                    <li><Link to="/dashboard/manageusers"><FaUsers></FaUsers> Manage Users</Link></li>
-                    
-                  </>
-                  </>
-                  :
-                  <>
-                    <li><Link to="/dashboard/myclasses"><FaSchool></FaSchool> My Classes</Link></li>
-                    <li><Link to="/dashboard/enrolledclasses"><FaStamp></FaStamp> Enrolled Classes</Link></li>
-                    <li><Link to="/dashboard/history"><FaStamp></FaStamp> Payment History</Link></li>
-                  </>
-              }
-
-
-
-
+              {isAdmin && (
+                <>
+                  <li>
+                    <Link to="/dashboard/manageclasses">
+                      <AiFillBank />
+                      Manage Classes
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/manageusers">
+                      <FaUsers />
+                      Manage Users
+                    </Link>
+                  </li>
+                </>
+              )}
+              {!isAdmin && isInstructor && (
+                <>
+                  <li>
+                    <Link to="/dashboard/addclass">
+                      <FaPlus />
+                      Add Class
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/myaddedclasses">
+                      <FaSchool />
+                      My Added Classes
+                    </Link>
+                  </li>
+                </>
+              )}
+              {!isAdmin && !isInstructor &&(
+                <>
+                  <li>
+                    <Link to="/dashboard/myclasses">
+                      <FaSchool />
+                      My Classes
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/enrolledclasses">
+                      <FaStamp />
+                      Enrolled Classes
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/paymenthistory">
+                      <FaStamp />
+                      Payment History
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
-        <Outlet></Outlet>
+        <Outlet />
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full bg-base-200">
           {/* Sidebar content here */}
-          <li><a>My Classes</a></li>
-          <li><a>Enrolled Classes</a></li>
-
+          <li>
+            <a>My Classes</a>
+          </li>
+          <li>
+            <a>Enrolled Classes</a>
+          </li>
         </ul>
-
       </div>
     </div>
   );
