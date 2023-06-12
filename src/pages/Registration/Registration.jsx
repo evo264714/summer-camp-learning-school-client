@@ -1,18 +1,15 @@
 
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
-import { signInWithPopup } from "firebase/auth";
-import { FaGoogle } from "react-icons/fa";
+import GoogleLogin from "../../components/GoogleLogin/GoogleLogin";
 
 const Registration = () => {
     const { register, handleSubmit, reset, formState: { errors, isSubmitting }, watch } = useForm();
-    const { createUser, updateUserProfile, auth, googleProvider } = useContext(AuthContext)
+    const { createUser, updateUserProfile } = useContext(AuthContext)
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
 
     const onSubmit = (data) => {
         createUser(data.email, data.password)
@@ -49,19 +46,7 @@ const Registration = () => {
             })
     };
 
-    const handleGoogleSignIn = () =>{
-        signInWithPopup(auth, googleProvider)
-        .then(result =>{
-            
-            const user = result.user;
-            console.log(user);
-            navigate(from, {replace: true})
-
-        })
-        .catch(error =>{
-            console.log(error.message);
-        })
-    }
+    
     return (
         <div className="min-h-screen text-white flex justify-center items-center my-20">
             <div className="bg-base-content p-8 rounded-lg w-[500px]">
@@ -132,9 +117,7 @@ const Registration = () => {
                     </button>
                 </form>
                 <p className="py-2">Already have an account? Please <Link to='/login'><span className="underline">Login</span></Link> Here</p>
-                <div className="flex justify-center">
-                    <button onClick={handleGoogleSignIn} className="btn btn-circle bg-yellow-200 py-4 text-red-500 text-center"><FaGoogle></FaGoogle></button>
-                </div>
+                <GoogleLogin></GoogleLogin>
             </div>
         </div>
     );
