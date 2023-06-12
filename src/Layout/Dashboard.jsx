@@ -2,11 +2,12 @@ import { Link, Outlet } from "react-router-dom";
 import { FaSchool, FaStamp, FaUsers, FaPlus } from "react-icons/fa";
 import { AiFillBank } from "react-icons/ai";
 import useAdmin from "../hooks/useAdmin";
-import useInstructor from "../hooks/useInstructor";
+import useInstructorAccess from "../hooks/useInstructorAccess";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
-  const [isInstructor] = useInstructor();
+  const [isInstructor] = useInstructorAccess();
+  console.log({isAdmin, isInstructor});
 
   return (
     <div className="drawer">
@@ -55,7 +56,7 @@ const Dashboard = () => {
                   </li>
                 </>
               )}
-              {!isAdmin && !isInstructor &&(
+              {!isAdmin && !isInstructor && (
                 <>
                   <li>
                     <Link to="/dashboard/myclasses">
@@ -77,6 +78,7 @@ const Dashboard = () => {
                   </li>
                 </>
               )}
+
             </ul>
           </div>
         </div>
