@@ -1,20 +1,22 @@
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const ClassCard = ({ singleClass }) => {
     const { name, instructorName, image, availableSeats, price, _id } = singleClass;
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useAuth()
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleSelectClass = (item) => {
-        console.log(item);
+        
+        if(loading){
+            console.log(item);
+        }
 
         if (user && user.email) {
-            const selectedClasses ={classId: _id, name, image, price, email: user.email}
-            fetch('http://localhost:5000/singleuserclass',{
+            const selectedClasses = { classId: _id, name, image, price, email: user.email }
+            fetch('http://localhost:5000/singleuserclass', {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json"

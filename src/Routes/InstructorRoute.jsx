@@ -5,15 +5,15 @@ import useInstructorAccess from "../hooks/useInstructorAccess";
 
 const InstructorRoute = ({ children }) => {
     const { user, loading } = useAuth();
-    const [isInstructor, isInstructorLoading] = useInstructorAccess();
+    const [ isInstructorLoading] = useInstructorAccess();
     const location = useLocation()
-    if(loading || isInstructorLoading){
+    if (loading || isInstructorLoading) {
         return <span className="loading loading-bars loading-lg"></span>
     }
-    if (user && isInstructor) {
+    if (user?.role == 'instructor') {
         return children;
     }
-    return <Navigate to='/login' state = {{from: location}} replace></Navigate>
+    return <Navigate to='/login' state={{ from: location }} replace></Navigate>
 };
 
 export default InstructorRoute;

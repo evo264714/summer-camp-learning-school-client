@@ -1,13 +1,18 @@
 import { Link, Outlet } from "react-router-dom";
 import { FaSchool, FaStamp, FaUsers, FaPlus } from "react-icons/fa";
 import { AiFillBank } from "react-icons/ai";
+import { motion } from "framer-motion";
 import useAdmin from "../hooks/useAdmin";
 import useInstructorAccess from "../hooks/useInstructorAccess";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
   const [isInstructor] = useInstructorAccess();
-  console.log({isAdmin, isInstructor});
+
+  const sidebarVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+  };
 
   return (
     <div className="drawer">
@@ -23,7 +28,12 @@ const Dashboard = () => {
             Melody Muse
           </Link>
           <div className="flex-none hidden lg:block">
-            <ul className="flex justify-around p-4 w-80">
+            <motion.ul
+              className="flex justify-around p-4 w-80"
+              initial="hidden"
+              animate="visible"
+              variants={sidebarVariants}
+            >
               {isAdmin && (
                 <>
                   <li>
@@ -40,7 +50,7 @@ const Dashboard = () => {
                   </li>
                 </>
               )}
-              {!isAdmin && isInstructor && (
+              {isInstructor && (
                 <>
                   <li>
                     <Link to="/dashboard/addclass">
@@ -49,7 +59,7 @@ const Dashboard = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/dashboard/myaddedclasses">
+                    <Link to="/dashboard/myaddedclass">
                       <FaSchool />
                       My Added Classes
                     </Link>
@@ -78,8 +88,7 @@ const Dashboard = () => {
                   </li>
                 </>
               )}
-
-            </ul>
+            </motion.ul>
           </div>
         </div>
         <Outlet />
@@ -87,7 +96,6 @@ const Dashboard = () => {
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full bg-base-200">
-          {/* Sidebar content here */}
           <li>
             <a>My Classes</a>
           </li>

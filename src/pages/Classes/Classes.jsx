@@ -3,7 +3,7 @@ import ClassCard from "./ClassCard";
 
 const Classes = () => {
     const [classes] = useClass();
-    // console.log(classes);
+    console.log('This is classes right here: ', classes);
 
     return (
         <div className="grid grid-cols-3">
@@ -18,3 +18,4 @@ const Classes = () => {
 };
 
 export default Classes;
+
