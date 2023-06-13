@@ -6,7 +6,7 @@ const PopularInstructor = () => {
     const [instructor] = useInstructor()
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 py-6">
             {
                 instructor.map(ins => <PopularInstructorsCard
                     key={ins._id}

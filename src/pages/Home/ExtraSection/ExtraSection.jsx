@@ -1,51 +1,27 @@
 import { motion } from 'framer-motion';
 
-const MusicClassCard = () => {
-
-  const buttonVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.1 },
-    tap: { scale: 0.9 },
-  };
+const ExtraSection = () => {
 
   return (
-    <div className="relative h-screen">
-      
-
-      <div className="relative flex flex-col items-center justify-center h-screen">
-        <motion.div
-          className="bg-white rounded-lg shadow-xl p-8 max-w-lg"
-          variants={{
-            hidden: { opacity: 0, scale: 0.8 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: {
-                duration: 0.5,
-                ease: 'easeOut',
-              },
-            },
-          }}
-          initial="hidden"
-          animate="visible"
-        >
-          <h2 className="text-3xl font-semibold mb-4">Join Our Music Classes!</h2>
-          <p className="text-lg mb-6">
-            Explore the world of music with our experienced instructors. Whether youre a beginner or an advanced musician, we have classes for everyone.
-          </p>
-          <motion.button
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            className="bg-purple-500 text-white rounded-lg px-4 py-2 shadow-md font-medium"
-          >
-            Enroll Now
-          </motion.button>
-        </motion.div>
-      </div>
-    </div>
+    <div className="flex items-center justify-center">
+    <motion.div
+      className="w-80 h-80 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex flex-col items-center justify-center"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+    >
+      <h2 className="text-white text-2xl font-bold mb-4 p-3">Join our Music Classes</h2>
+      <p className="text-white text-lg p-3">Explore the world of music and enhance your skills.</p>
+      <motion.button
+        className="btn btn-white mt-6"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        Learn More
+      </motion.button>
+    </motion.div>
+  </div>
   );
 };
 
-export default MusicClassCard;
+export default ExtraSection;
 

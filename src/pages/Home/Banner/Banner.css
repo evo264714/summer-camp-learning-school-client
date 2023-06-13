@@ -5,7 +5,10 @@
     transform: translate(-50%, -50%);
     text-align: center;
     color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
   }
+
   
   .slide-content h2 {
     font-size: 24px;
@@ -14,10 +17,10 @@
   }
   
   .slide-content p {
-    font-size: 1.5rem;
-    color: rgba(16, 187, 16, 0.878)
+    font-size: 2rem;
+    color: white
   }
   .slide-content h2{
     font-size: 2.5rem;
-    color: rgba(219, 219, 14, 0.71)
+    color: #34D399
   }
