@@ -1,202 +1,536 @@
-import { useState, useEffect } from "react";
-// import { AuthContext } from "../../providers/AuthProvider";
-import Swal from "sweetalert2";
-import useFetch from './../../../hooks/useFetch';
+// import { useState, useEffect } from 'react';
+
+// const ManageClasses = () => {
+//   const [classes, setClasses] = useState([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [feedback, setFeedback] = useState('');
+//   const [selectedClass, setSelectedClass] = useState(null);
+
+//   useEffect(() => {
+//     fetchClasses();
+//   }, []);
+
+//   const fetchClasses = async () => {
+//     try {
+//       const response = await fetch('http://localhost:5000/classes');
+//       const data = await response.json();
+//       setClasses(data);
+//     } catch (error) {
+//       console.error('Failed to fetch classes', error);
+//     }
+//   };
+
+//   const handleApprove = async (classId) => {
+//     try {
+//       await updateClassStatus(classId, 'approved');
+//       fetchClasses();
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//     }
+//   };
+
+//   const handleDeny = async (classId) => {
+//     try {
+//       await updateClassStatus(classId, 'denied');
+//       fetchClasses();
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//     }
+//   };
+
+//   const updateClassStatus = async (classId, status) => {
+//     try {
+//       await fetch(`http://localhost:5000/classes/${classId}/status`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ status }),
+//       });
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//       throw error;
+//     }
+//   };
+
+//   const openModal = (cls) => {
+//     setSelectedClass(cls);
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//     setFeedback('');
+//   };
+
+//   const handleSendFeedback = async () => {
+//     try {
+//       if (!selectedClass) return;
+
+//       await updateClassFeedback(selectedClass._id, feedback);
+//       fetchClasses();
+//       closeModal();
+//     } catch (error) {
+//       console.error('Failed to send feedback', error);
+//     }
+//   };
+
+//   const updateClassFeedback = async (classId, feedback) => {
+//     try {
+//       await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ feedback }),
+//       });
+//     } catch (error) {
+//       console.error('Failed to update class feedback', error);
+//       throw error;
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1 className="text-2xl font-bold mb-4">Manage Classes</h1>
+//       <table className="min-w-full bg-white">
+//         <thead>
+//           <tr>
+//             <th>Class Name</th>
+//             <th>Instructor Name</th>
+//             <th>Available Seats</th>
+//             <th>Price</th>
+//             <th>Status</th>
+//             <th>Actions</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {classes.map((cls) => (
+//             <tr key={cls._id}>
+//               <td>{cls.name}</td>
+//               <td>{cls.instructorName}</td>
+//               <td>{cls.instructorEmail}</td>
+//               <td>{cls.availableSeats}</td>
+//               <td>{cls.price}</td>
+//               <td>{cls.status}</td>
+//               <td>
+//                 <button
+//                   onClick={() => handleApprove(cls._id)}
+//                   disabled={cls.status !== 'pending'}
+//                   className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+//                 >
+//                   Approve
+//                 </button>
+//                 <button
+//                   onClick={() => handleDeny(cls._id)}
+//                   disabled={cls.status !== 'pending'}
+//                   className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+//                 >
+//                   Deny
+//                 </button>
+//                 <button
+//                   onClick={() => openModal(cls)}
+//                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+//                 >
+//                   Send Feedback
+//                 </button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+
+//       {isModalOpen && (
+//         <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+//           <div className="bg-white p-4 rounded shadow">
+//             <h2 className="text-lg font-bold mb-4">Send Feedback</h2>
+//             <textarea
+//               className="w-full h-24 border border-gray-300 rounded p-2 mb-4"
+//               placeholder="Enter your feedback"
+//               value={feedback}
+//               onChange={(e) => setFeedback(e.target.value)}
+//             ></textarea>
+//             <div className="flex justify-end">
+//               <button
+//                 onClick={handleSendFeedback}
+//                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+//               >
+//                 Send
+//               </button>
+//               <button
+//                 onClick={closeModal}
+//                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-2"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ManageClasses;
+
+
+// import { useState, useEffect } from 'react';
+
+// const ManageClasses = () => {
+//   const [classes, setClasses] = useState([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [feedback, setFeedback] = useState('');
+//   const [selectedClass, setSelectedClass] = useState(null);
+//   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
+//   useEffect(() => {
+//     fetchClasses();
+//   }, []);
+
+//   const fetchClasses = async () => {
+//     try {
+//       const response = await fetch('http://localhost:5000/classes');
+//       const data = await response.json();
+//       setClasses(data);
+//     } catch (error) {
+//       console.error('Failed to fetch classes', error);
+//     }
+//   };
+
+//   const handleApprove = async (classId) => {
+//     try {
+//       setIsUpdatingStatus(true);
+//       await updateClassStatus(classId, 'approved');
+//       fetchClasses();
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//     } finally {
+//       setIsUpdatingStatus(false);
+//     }
+//   };
+
+//   const handleDeny = async (classId) => {
+//     try {
+//       setIsUpdatingStatus(true);
+//       await updateClassStatus(classId, 'denied');
+//       fetchClasses();
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//     } finally {
+//       setIsUpdatingStatus(false);
+//     }
+//   };
+
+//   const updateClassStatus = async (classId, status) => {
+//     try {
+//       await fetch(`http://localhost:5000/classes/${classId}/status`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ status }),
+//       });
+//     } catch (error) {
+//       console.error('Failed to update class status', error);
+//       throw error;
+//     }
+//   };
+
+//   const openModal = (cls) => {
+//     setSelectedClass(cls);
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//     setFeedback('');
+//   };
+
+//   const handleSendFeedback = async () => {
+//     try {
+//       if (!selectedClass) return;
+
+//       await updateClassFeedback(selectedClass._id, feedback);
+//       fetchClasses();
+//       closeModal();
+//     } catch (error) {
+//       console.error('Failed to send feedback', error);
+//     }
+//   };
+
+//   const updateClassFeedback = async (classId, feedback) => {
+//     try {
+//       await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ feedback }),
+//       });
+//     } catch (error) {
+//       console.error('Failed to update class feedback', error);
+//       throw error;
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1 className="text-2xl font-bold mb-4">Manage Classes</h1>
+//       <table className="min-w-full bg-white">
+//         <thead>
+//           <tr>
+//             <th>Class Name</th>
+//             <th>Instructor Name</th>
+//             <th>Available Seats</th>
+//             <th>Price</th>
+//             <th>Status</th>
+//             <th>Actions</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {classes.map((cls) => (
+//             <tr key={cls._id}>
+//               <td>{cls.name}</td>
+//               <td>{cls.instructorName}</td>
+//               <td>{cls.instructorEmail}</td>
+//               <td>{cls.availableSeats}</td>
+//               <td>{cls.price}</td>
+//               <td>{cls.status}</td>
+//               <td>
+//                 <button
+//                   onClick={() => handleApprove(cls._id)}
+//                   disabled={cls.status !== 'pending' || isUpdatingStatus}
+//                   className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+//                 >
+//                   Approve
+//                 </button>
+//                 <button
+//                   onClick={() => handleDeny(cls._id)}
+//                   disabled={cls.status !== 'pending' || isUpdatingStatus}
+//                   className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+//                 >
+//                   Deny
+//                 </button>
+//                 <button
+//                   onClick={() => openModal(cls)}
+//                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+//                 >
+//                   Send Feedback
+//                 </button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+
+//       {isModalOpen && (
+//         <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+//           <div className="bg-white p-4 rounded shadow">
+//             <h2 className="text-lg font-bold mb-4">Send Feedback</h2>
+//             <textarea
+//               className="w-full h-24 border border-gray-300 rounded p-2 mb-4"
+//               placeholder="Enter your feedback"
+//               value={feedback}
+//               onChange={(e) => setFeedback(e.target.value)}
+//             ></textarea>
+//             <div className="flex justify-end">
+//               <button
+//                 onClick={handleSendFeedback}
+//                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+//               >
+//                 Send
+//               </button>
+//               <button
+//                 onClick={closeModal}
+//                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-2"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ManageClasses;
+
+import { useState, useEffect } from 'react';
 
 const ManageClasses = () => {
   const [classes, setClasses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { isLoading, data, error } = useFetch("http://localhost:5000/classes");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
   useEffect(() => {
-    if (data) {
+    fetchClasses();
+  }, []);
+
+  const fetchClasses = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/classes');
+      const data = await response.json();
       setClasses(data);
-      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch classes', error);
     }
-  }, [data]);
-
-  const handleApprove = (classId) => {
-    const updatedClass = { status: "approved" };
-
-    fetch(`http://localhost:5000/classes/${classId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedClass),
-    })
-      .then(() => {
-        setClasses((prevClasses) =>
-          prevClasses.map((cls) =>
-            cls._id === classId ? { ...cls, status: "approved" } : cls
-          )
-        );
-
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Class has been approved",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        console.error("Error approving class:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong! Please try again.",
-        });
-      });
   };
 
-  const handleDeny = (classId) => {
-    const updatedClass = { status: "denied" };
-
-    fetch(`http://localhost:5000/classes/${classId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedClass),
-    })
-      .then(() => {
-        setClasses((prevClasses) =>
-          prevClasses.map((cls) =>
-            cls._id === classId ? { ...cls, status: "denied" } : cls
-          )
-        );
-
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Class has been denied",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        console.error("Error denying class:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong! Please try again.",
-        });
-      });
+  const handleApprove = async (classId) => {
+    try {
+      setIsUpdatingStatus(true);
+      await updateClassStatus(classId, 'approved');
+      fetchClasses();
+    } catch (error) {
+      console.error('Failed to update class status', error);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
   };
 
-  const handleFeedback = (classId) => {
-    Swal.fire({
-      title: "Send Feedback",
-      input: "text",
-      inputLabel: "Feedback",
-      inputPlaceholder: "Type your feedback here...",
-      showCancelButton: true,
-      confirmButtonText: "Send",
-      showLoaderOnConfirm: true,
-      preConfirm: (feedback) => {
-        const updatedClass = { feedback };
+  const handleDeny = async (classId) => {
+    try {
+      setIsUpdatingStatus(true);
+      await updateClassStatus(classId, 'denied');
+      fetchClasses();
+    } catch (error) {
+      console.error('Failed to update class status', error);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
 
-        return fetch(`http://localhost:5000/classes/${classId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedClass),
-        })
-          .then(() => {
-            setClasses((prevClasses) =>
-              prevClasses.map((cls) =>
-                cls._id === classId ? { ...cls, feedback } : cls
-              )
-            );
+  const updateClassStatus = async (classId, status) => {
+    try {
+      await fetch(`http://localhost:5000/classes/${classId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+    } catch (error) {
+      console.error('Failed to update class status', error);
+      throw error;
+    }
+  };
 
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Feedback sent successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          })
-          .catch((error) => {
-            console.error("Error sending feedback:", error);
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong! Please try again.",
-            });
-          });
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    });
+  const openModal = (cls) => {
+    setSelectedClass(cls);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFeedback('');
+  };
+
+  const handleSendFeedback = async () => {
+    try {
+      if (!selectedClass) return;
+
+      await updateClassFeedback(selectedClass._id, feedback);
+      fetchClasses();
+      closeModal();
+    } catch (error) {
+      console.error('Failed to send feedback', error);
+    }
+  };
+
+  const updateClassFeedback = async (classId, feedback) => {
+    try {
+      await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feedback }),
+      });
+    } catch (error) {
+      console.error('Failed to update class feedback', error);
+      throw error;
+    }
   };
 
   return (
-    <div>
-      <h2 className="text-5xl py-8 text-success">Manage Classes</h2>
-      <div className="grid grid-cols-1 gap-6">
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <div>Error: {error.message}</div>
-        ) : (
-          classes.map((cls) => (
-            <div
-              key={cls._id}
-              className="border border-gray-300 rounded p-4 flex items-center justify-between"
-            >
-              <div className="flex items-center">
-                <img
-                  src={cls.image}
-                  alt="Class"
-                  className="w-16 h-16 rounded-full object-cover mr-4"
-                />
-                <div>
-                  <h3 className="font-bold text-lg">{cls.name}</h3>
-                  <p className="text-sm text-gray-500">
-                    Instructor: {cls.instructorName}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Email: {cls.instructorEmail}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Available Seats: {cls.availableSeats}
-                  </p>
-                  <p className="text-sm text-gray-500">Price: {cls.price}</p>
-                  <p className="text-sm text-gray-500">
-                    Status: {cls.status}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center">
-                {cls.status === "pending" && (
-                  <>
-                    <button
-                      className="btn btn-primary mr-2"
-                      onClick={() => handleApprove(cls._id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="btn btn-danger mr-2"
-                      onClick={() => handleDeny(cls._id)}
-                    >
-                      Deny
-                    </button>
-                  </>
-                )}
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-4">Manage Classes</h1>
+      <table className="w-full bg-white border border-gray-200">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="py-2 px-4 border-b">Class Name</th>
+            <th className="py-2 px-4 border-b">Instructor Name</th>
+            <th className="py-2 px-4 border-b">Available Seats</th>
+            <th className="py-2 px-4 border-b">Price</th>
+            <th className="py-2 px-4 border-b">Status</th>
+            <th className="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {classes.map((cls) => (
+            <tr key={cls._id}>
+              <td className="py-2 px-4 border-b">{cls.name}</td>
+              <td className="py-2 px-4 border-b">{cls.instructorName}</td>
+              <td className="py-2 px-4 border-b">{cls.availableSeats}</td>
+              <td className="py-2 px-4 border-b">{cls.price}</td>
+              <td className="py-2 px-4 border-b">{cls.status}</td>
+              <td className="py-2 px-4 border-b">
                 <button
-                  className="btn btn-secondary"
-                  onClick={() => handleFeedback(cls._id)}
+                  onClick={() => handleApprove(cls._id)}
+                  disabled={cls.status !== 'pending' || isUpdatingStatus}
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleDeny(cls._id)}
+                  disabled={cls.status !== 'pending' || isUpdatingStatus}
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+                >
+                  Deny
+                </button>
+                <button
+                  onClick={() => openModal(cls)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 >
                   Send Feedback
                 </button>
-              </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow">
+            <h2 className="text-lg font-bold mb-4">Send Feedback</h2>
+            <textarea
+              className="w-full h-24 border border-gray-300 rounded p-2 mb-4"
+              placeholder="Enter your feedback"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            ></textarea>
+            <div className="flex justify-end">
+              <button
+                onClick={handleSendFeedback}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              >
+                Send
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button>
             </div>
-          ))
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

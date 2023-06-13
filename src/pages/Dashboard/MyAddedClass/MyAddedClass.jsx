@@ -1,4 +1,4 @@
-import { FaInbox, FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import useClass from "../../../hooks/useClass";
 
 const MyAddedClass = () => {
@@ -38,7 +38,7 @@ const MyAddedClass = () => {
                                 <td>{item.name}</td>
                                 <td>Purple</td>
                                 <td>{item.status}</td>
-                                <td><button className="btn btn-xs btn-success px-4"><FaInbox className="text-xl"></FaInbox></button></td>
+                                <td>{item.feedback}</td>
                                 <td>
                                     <button className="btn btn-warning btn-xs px-4"><FaEdit className="text-xl"/></button>
                                 </td>

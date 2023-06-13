@@ -7,6 +7,7 @@ const useFetch = (url) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(url);
       try {
         const response = await fetch(url);
         if (!response.ok) {
