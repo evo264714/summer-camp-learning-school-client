@@ -37,10 +37,15 @@ const MyAddedClass = () => {
                                 </td>
                                 <td>{item.name}</td>
                                 <td>Purple</td>
-                                <td>{item.status}</td>
-                                <td>{item.feedback}</td>
+                                <td
+                                    className={`py-2 px-4 border-b ${item.status === 'approved' ? 'text-green-500' : item.status === 'denied' ? 'text-red-500' : 'text-orange-500'
+                                        }`}
+                                >
+                                    {item.status}
+                                </td>
+                                <td className="text-blue-500">{item.feedback}</td>
                                 <td>
-                                    <button className="btn btn-warning btn-xs px-4"><FaEdit className="text-xl"/></button>
+                                    <button className="btn btn-warning btn-xs px-4"><FaEdit className="text-xl" /></button>
                                 </td>
                             </tr>)
                         }

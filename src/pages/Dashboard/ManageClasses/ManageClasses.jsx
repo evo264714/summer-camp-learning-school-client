@@ -470,38 +470,42 @@ const ManageClasses = () => {
           </tr>
         </thead>
         <tbody>
-          {classes.map((cls) => (
-            <tr key={cls._id}>
-              <td className="py-2 px-4 border-b">{cls.name}</td>
-              <td className="py-2 px-4 border-b">{cls.instructorName}</td>
-              <td className="py-2 px-4 border-b">{cls.availableSeats}</td>
-              <td className="py-2 px-4 border-b">{cls.price}</td>
-              <td className="py-2 px-4 border-b">{cls.status}</td>
-              <td className="py-2 px-4 border-b">
-                <button
-                  onClick={() => handleApprove(cls._id)}
-                  disabled={cls.status !== 'pending' || isUpdatingStatus}
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleDeny(cls._id)}
-                  disabled={cls.status !== 'pending' || isUpdatingStatus}
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
-                >
-                  Deny
-                </button>
-                <button
-                  onClick={() => openModal(cls)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                >
-                  Send Feedback
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {classes.map((cls) => (
+    <tr key={cls._id}>
+      <td className="py-2 px-4 border-b">{cls.name}</td>
+      <td className="py-2 px-4 border-b">{cls.instructorName}</td>
+      <td className="py-2 px-4 border-b">{cls.availableSeats}</td>
+      <td className="py-2 px-4 border-b">{cls.price}</td>
+      <td className="py-2 px-4 border-b">{cls.status}</td>
+      <td className="py-2 px-4 border-b">
+        <button
+          onClick={() => handleApprove(cls._id)}
+          disabled={cls.status !== 'pending' || isUpdatingStatus || cls.approved}
+          className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2 ${
+            cls.approved ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          Approve
+        </button>
+        <button
+          onClick={() => handleDeny(cls._id)}
+          disabled={cls.status !== 'pending' || isUpdatingStatus || cls.denied}
+          className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2 ${
+            cls.denied ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          Deny
+        </button>
+        <button
+          onClick={() => openModal(cls)}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Send Feedback
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
 
       {isModalOpen && (

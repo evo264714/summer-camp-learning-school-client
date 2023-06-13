@@ -4,7 +4,7 @@ import InstructorsCard from "./InstructorsCard";
 const Instructors = () => {
     const [instructor] = useInstructor();
     return (
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
             {
                 instructor.map(ins => <InstructorsCard
                     key={ins._id}
