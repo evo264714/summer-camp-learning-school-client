@@ -9,7 +9,8 @@ import slider5 from '../../../../src/assets/banner/slider-5.jpg'
 
 const Banner = () => {
     return (
-        
+
+        <div className="pb-10">
             <AwesomeSlider className="h-[500px]">
                 <div data-src={slider1}>
                     <div className="slide-content">
@@ -42,7 +43,8 @@ const Banner = () => {
                     </div>
                 </div>
             </AwesomeSlider>
-       
+        </div>
+
     );
 };
 

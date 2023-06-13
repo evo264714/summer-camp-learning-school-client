@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const ExtraSection = () => {
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center py-8">
     <motion.div
       className="w-80 h-80 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex flex-col items-center justify-center"
       whileHover={{ scale: 1.1 }}
