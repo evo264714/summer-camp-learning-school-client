@@ -19,7 +19,7 @@ const PopularClassesSection = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <img src={classItem.image} alt='' className="rounded-2xl" />
+                        <img src={classItem.image} alt='' className="rounded-2xl h-2/3" />
                         <div className='pt-4'>
                             <h2>Class: {classItem.name}</h2>
                             <p>Instructor: {classItem.instructorName}</p>
