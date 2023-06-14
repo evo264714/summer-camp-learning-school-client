@@ -5,6 +5,7 @@ const PopularClassesSection = () => {
     const [classes] = useClass();
     const sortedClasses = [...classes].sort((a, b) => b.enrolledStudents - a.enrolledStudents);
     const topClasses = sortedClasses.slice(0, 6);
+    console.log(topClasses);
 
     return (
         <>

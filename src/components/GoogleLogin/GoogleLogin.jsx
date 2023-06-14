@@ -18,7 +18,7 @@ const GoogleLogin = () => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
                 const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
-                fetch('https://summer-camp-learning-school-server-six.vercel.app/users', {
+                fetch('https://summer-camp-learning-school-server-evo264714.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

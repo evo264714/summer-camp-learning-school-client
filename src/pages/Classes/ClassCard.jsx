@@ -10,7 +10,10 @@ const ClassCard = ({ singleClass }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isAdmin] = useAdmin();
-    const [isInstructor] = useInstructorAccess()
+    const [isInstructor] = useInstructorAccess();
+    console.log(isAdmin, isInstructor);
+    console.log('user is: ', user);
+    
 
     const handleSelectClass = (item) => {
         
@@ -20,7 +23,7 @@ const ClassCard = ({ singleClass }) => {
 
         if (user && user.email) {
             const selectedClasses = { classId: _id, name, image, price, email: user.email }
-            fetch('https://summer-camp-learning-school-server-six.vercel.app/singleuserclass', {
+            fetch('https://summer-camp-learning-school-server-evo264714.vercel.app/singleuserclass', {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json"
@@ -66,7 +69,7 @@ const ClassCard = ({ singleClass }) => {
                 <p>Available Seats: {availableSeats}</p>
                 <p>Price: {price}</p>
                 <div className="card-actions justify-center mt-4">
-                    <button onClick={() => handleSelectClass(singleClass)} className="btn btn-white" disabled={ isAdmin  || isInstructor || singleClass.availableSeats === 0}>Select</button>
+                    <button onClick={() => handleSelectClass(singleClass)} className="btn btn-white" disabled={ isAdmin || isInstructor ||  singleClass.availableSeats === 0}>Select</button>
                 </div>
             </div>
         </div>

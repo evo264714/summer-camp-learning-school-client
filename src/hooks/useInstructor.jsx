@@ -5,7 +5,7 @@ const useInstructor = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() =>{
-        fetch('https://summer-camp-learning-school-server-six.vercel.app/instructor')
+        fetch('https://summer-camp-learning-school-server-evo264714.vercel.app/instructor')
         .then(res => res.json())
         .then(data => {
             setInstructor(data);
