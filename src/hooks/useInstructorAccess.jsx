@@ -4,7 +4,6 @@ import useAxios from "./useAxios";
 
 const useInstructorAccess = () => {
     const { user } = useAuth();
-    console.log(user);
     const [axiosSecure] = useAxios();
     const { data: isInstructor, isLoading: isInstructorLoading } = useQuery({
         queryKey: ['isInstructor', user?.email],

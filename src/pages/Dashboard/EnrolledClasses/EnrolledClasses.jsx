@@ -1,7 +1,7 @@
 import usePayment from "../../../hooks/usePayment";
 
 const EnrolledClasses = () => {
-    const [payments] = usePayment()
+    const [payments] = usePayment();
 
     return (
         <div>

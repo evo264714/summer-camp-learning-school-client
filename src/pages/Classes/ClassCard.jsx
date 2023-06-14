@@ -1,12 +1,16 @@
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useAdmin from "../../hooks/useAdmin";
+import useInstructorAccess from "../../hooks/useInstructorAccess";
 
 const ClassCard = ({ singleClass }) => {
     const { name, instructorName, image, availableSeats, price, _id } = singleClass;
     const { user, loading } = useAuth()
     const navigate = useNavigate();
     const location = useLocation();
+    const [isAdmin] = useAdmin();
+    const [isInstructor] = useInstructorAccess()
 
     const handleSelectClass = (item) => {
         
@@ -62,7 +66,7 @@ const ClassCard = ({ singleClass }) => {
                 <p>Available Seats: {availableSeats}</p>
                 <p>Price: {price}</p>
                 <div className="card-actions justify-center mt-4">
-                    <button onClick={() => handleSelectClass(singleClass)} className="btn btn-white" disabled={singleClass.availableSeats === 0 || user?.role === "admin" || user?.role === "instructor"}>Select</button>
+                    <button onClick={() => handleSelectClass(singleClass)} className="btn btn-white" disabled={ isAdmin  || isInstructor || singleClass.availableSeats === 0}>Select</button>
                 </div>
             </div>
         </div>

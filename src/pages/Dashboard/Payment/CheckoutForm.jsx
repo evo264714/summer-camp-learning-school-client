@@ -81,6 +81,7 @@ const CheckoutForm = ({ price, row }) => {
                 price,
                 date: new Date(),
                 transactionId: paymentIntent.id,
+                enrolledStudents: row._id
 
             }
             axiosSecure.post('/payments', payment)
@@ -94,6 +95,12 @@ const CheckoutForm = ({ price, row }) => {
                             showConfirmButton: false,
                             timer: 1500
                         })
+                        fetch(`http://localhost:5000/payments/${row.classId
+                            }`,{
+                                method: 'PUT',
+                            })
+                            .then(res => res.json())
+                            .then(data=> console.log(data))
                     }
                 })
         }

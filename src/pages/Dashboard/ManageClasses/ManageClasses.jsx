@@ -5,7 +5,7 @@ const ManageClasses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [selectedClass, setSelectedClass] = useState(null);
-  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  // const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
   useEffect(() => {
     fetchClasses();
@@ -23,25 +23,25 @@ const ManageClasses = () => {
 
   const handleApprove = async (classId) => {
     try {
-      setIsUpdatingStatus(true);
+      // setIsUpdatingStatus(true);
       await updateClassStatus(classId, 'approved');
       fetchClasses();
     } catch (error) {
       console.error('Failed to update class status', error);
     } finally {
-      setIsUpdatingStatus(false);
+      // setIsUpdatingStatus(false);
     }
   };
 
   const handleDeny = async (classId) => {
     try {
-      setIsUpdatingStatus(true);
+      // setIsUpdatingStatus(true);
       await updateClassStatus(classId, 'denied');
       fetchClasses();
     } catch (error) {
       console.error('Failed to update class status', error);
     } finally {
-      setIsUpdatingStatus(false);
+      // setIsUpdatingStatus(false);
     }
   };
 
@@ -122,25 +122,26 @@ const ManageClasses = () => {
       <td className="py-2 px-4 border-b">
         <button
           onClick={() => handleApprove(cls._id)}
-          disabled={cls.status !== 'pending' || isUpdatingStatus || cls.approved}
+          disabled={cls.status === 'approved' || cls.status === 'denied'}
           className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2 ${
-            cls.approved ? 'opacity-50 cursor-not-allowed' : ''
+            cls.status === 'approved' || cls.status === 'denied' ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           Approve
         </button>
         <button
           onClick={() => handleDeny(cls._id)}
-          disabled={cls.status !== 'pending' || isUpdatingStatus || cls.denied}
+          disabled={cls.status === 'approved' || cls.status === 'denied'}
           className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2 ${
-            cls.denied ? 'opacity-50 cursor-not-allowed' : ''
+            cls.status === 'approved' || cls.status === 'denied' ?  'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           Deny
         </button>
         <button
           onClick={() => openModal(cls)}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          disabled={cls.status === 'approved' || cls.status === 'pending'}
+          className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ${cls.status === 'approved' || cls.status === 'pending' ?  'opacity-50 cursor-not-allowed' : '' }`}
         >
           Send Feedback
         </button>
