@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import useClassesQuery from "../../../hooks/useClassesQuery";
 import { FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const MyClasses = () => {
     const [singleUserClass, refetch] = useClassesQuery();
@@ -36,7 +37,10 @@ const MyClasses = () => {
     }
     return (
         <div>
-            <h3 className="text-3xl">Total Classes: {singleUserClass.length}</h3>
+            <div className="divider"></div>
+            <h2 className="text-center text-success text-xl md:text-7xl lg:text-7xl font-bold py-8">Total Classes: {singleUserClass.length}</h2>
+            <div className="divider"></div>
+
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -69,7 +73,9 @@ const MyClasses = () => {
                                 <td>{row.name}</td>
                                 <td>{row.price} $</td>
                                 <td>
-                                    <button className="btn btn-success btn-xs px-4">Pay Now</button>
+                                    <Link to={`/dashboard/payment/${row._id}`} state={row}>
+                                        <button className="btn btn-success btn-xs px-4">Enroll Now</button>
+                                    </Link>
                                 </td>
                                 <td>
                                     <button onClick={() => handleDelete(row)} className="btn px-4 btn-error btn-xs text-lg"><FaTrashAlt /></button>
