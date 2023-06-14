@@ -11,7 +11,7 @@ const PaymentHistory = () => {
 
     const fetchPaymentHistory = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/payments/${user?.email}`); 
+            const response = await fetch(`https://summer-camp-learning-school-server-six.vercel.app/payments/${user?.email}`); 
             if (response.ok) {
                 const data = await response.json();
                 const sortedHistory = data.sort((a, b) => new Date(b.date) - new Date(a.date));

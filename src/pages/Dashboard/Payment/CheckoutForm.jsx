@@ -95,7 +95,7 @@ const CheckoutForm = ({ price, row }) => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        fetch(`http://localhost:5000/payments/${row.classId
+                        fetch(`https://summer-camp-learning-school-server-six.vercel.app/payments/${row.classId
                             }`,{
                                 method: 'PUT',
                             })

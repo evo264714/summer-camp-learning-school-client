@@ -10,7 +10,7 @@ const ManageUsers = () => {
     })
 
     const handleAdmin = user =>{
-        fetch(`http://localhost:5000/users/admin/${user._id}`,{
+        fetch(`https://summer-camp-learning-school-server-six.vercel.app/users/admin/${user._id}`,{
             method: 'PATCH'
         })
         .then(res => res.json())
@@ -29,7 +29,7 @@ const ManageUsers = () => {
     }
 
     const handleInstructor = user =>{
-        fetch(`http://localhost:5000/users/instructor/${user._id}`,{
+        fetch(`https://summer-camp-learning-school-server-six.vercel.app/users/instructor/${user._id}`,{
             method: 'PATCH'
         })
         .then(res => res.json())
@@ -51,7 +51,6 @@ const ManageUsers = () => {
             <h2 className="text-5xl my-8">Total Users: {users.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th>#</th>

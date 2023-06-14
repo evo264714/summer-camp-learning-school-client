@@ -6,7 +6,7 @@ const usePayment = () => {
   const { data: payments = [], isLoading: loading, refetch } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/payments/${user?.email}`);
+      const res = await fetch(`https://summer-camp-learning-school-server-six.vercel.app/payments/${user?.email}`);
       return res.json();
     },
   });

@@ -13,7 +13,7 @@ const ManageClasses = () => {
 
   const fetchClasses = async () => {
     try {
-      const response = await fetch('http://localhost:5000/classes');
+      const response = await fetch('https://summer-camp-learning-school-server-six.vercel.app/classes');
       const data = await response.json();
       setClasses(data);
     } catch (error) {
@@ -47,7 +47,7 @@ const ManageClasses = () => {
 
   const updateClassStatus = async (classId, status) => {
     try {
-      await fetch(`http://localhost:5000/classes/${classId}/status`, {
+      await fetch(`https://summer-camp-learning-school-server-six.vercel.app/classes/${classId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const ManageClasses = () => {
 
   const updateClassFeedback = async (classId, feedback) => {
     try {
-      await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+      await fetch(`https://summer-camp-learning-school-server-six.vercel.app/classes/${classId}/feedback`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

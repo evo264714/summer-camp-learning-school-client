@@ -20,7 +20,7 @@ const ClassCard = ({ singleClass }) => {
 
         if (user && user.email) {
             const selectedClasses = { classId: _id, name, image, price, email: user.email }
-            fetch('http://localhost:5000/singleuserclass', {
+            fetch('https://summer-camp-learning-school-server-six.vercel.app/singleuserclass', {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json"
