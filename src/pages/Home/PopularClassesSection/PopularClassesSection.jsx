@@ -14,7 +14,7 @@ const PopularClassesSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {topClasses.map((classItem) => (
                     <motion.div
-                        key={classItem.id}
+                        key={classItem._id}
                         className="class-card bg-gray-200 rounded-lg p-4 shadow-lg"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

@@ -25,3 +25,21 @@
     color: #34D399;
     
   }
+
+  @media (max-width: 576px) {
+    .banner-slider {
+      height: 300px;
+    }
+  
+    .slide-content {
+      padding: 10px;
+    }
+  
+    .slide-content h2 {
+      font-size: 20px;
+    }
+  
+    .slide-content p {
+      font-size: 14px;
+    }
+  }

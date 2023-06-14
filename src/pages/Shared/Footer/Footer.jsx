@@ -3,7 +3,7 @@ import logo from '../../../../src/assets/logo.png'
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-teal-800 to-green-900 py-8">
+        <footer className="bg-gradient-to-r from-teal-800 to-green-900 py-8 w-full">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/3 mb-4 md:mb-0">
