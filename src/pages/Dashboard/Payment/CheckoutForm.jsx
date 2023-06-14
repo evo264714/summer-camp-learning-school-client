@@ -4,7 +4,7 @@ import { useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import './CheckoutForm.css'
+
 
 const CheckoutForm = ({ price, row }) => {
     console.log(price, row);
@@ -18,11 +18,13 @@ const CheckoutForm = ({ price, row }) => {
     const [transactionId, setTransactionId] = useState('')
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent', { price })
-            .then(res => {
-                console.log(res.data.clientSecret);
-                setClientSecret(res.data.clientSecret)
-            })
+        if (price > 0) {
+            axiosSecure.post('/create-payment-intent', { price })
+                .then(res => {
+                    console.log(res.data.clientSecret);
+                    setClientSecret(res.data.clientSecret)
+                })
+        }
     }, [])
 
     const handleSubmit = async (event) => {
@@ -73,34 +75,34 @@ const CheckoutForm = ({ price, row }) => {
             setTransactionId(paymentIntent.id)
 
             const payment = {
-                id: row._id,
                 image: row.image,
                 className: row.name,
                 email: user?.email,
-                transactionId: paymentIntent.id,
                 price,
-                
+                date: new Date(),
+                transactionId: paymentIntent.id,
+
             }
             axiosSecure.post('/payments', payment)
-            .then(res =>{
-                console.log(res.data);
-                if(res.data.insertedId){
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Transaction Completed',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                }
-            })
+                .then(res => {
+                    console.log(res.data);
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Transaction Completed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
         }
     }
 
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <CardElement
+                <CardElement className='py-8 mx-auto'
                     options={{
                         style: {
                             base: {
