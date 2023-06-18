@@ -18,7 +18,7 @@ import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
 import AdminRoute from "./AdminRoute";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Payment from "../pages/Dashboard/Payment/Payment";
-import NotFound from "../pages/NotFound/NotFound";
+import NotFound from "../pages/NotFound/NotFound"
 
   export const router = createBrowserRouter([
     {
